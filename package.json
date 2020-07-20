@@ -1,0 +1,28 @@
+{
+  "name": "index_page_server",
+  "version": "1.0.0",
+  "description": "proxy services for TOP Webstudio",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kyung-hoon/index_page_server.git"
+  },
+  "author": "kyunghoon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kyung-hoon/index_page_server/issues"
+  },
+  "homepage": "https://github.com/kyung-hoon/index_page_server#readme",
+  "dependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-syntax-class-properties": "^7.10.1",
+    "@babel/preset-env": "^7.9.5",
+    "express": "^4.17.1",
+    "yarn": "^1.22.4"
+  }
+}
