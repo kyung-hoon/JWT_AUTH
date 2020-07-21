@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import express from 'express';
 import os from 'os';
 import path from 'path';
@@ -31,7 +31,7 @@ app.post('/create',(req,res) =>{
         fs.writeFileSync(path.join(os.homedir(),'workspace.json'),JSON.stringify(content));
         res.send(content);
     }else{
-        const content = fs.readFileSync(path.join(os.homedir(),'workspace.json'),JSON.stringify(content));
+        const content = fs.readFileSync(path.join(os.homedir(),'workspace.json'));
         let workSpaceArray = JSON.parse(content).workspaces;
         const workSpaceObejct ={
             name: name,
@@ -47,4 +47,21 @@ app.post('/create',(req,res) =>{
         res.send(updatedContent);
     }
     
+});
+
+app.post('/remove',(req, res)=>{
+    const name = req.body.workspaceName;
+    const dirLocation = path.join(os.homedir(),name);
+    fs.rmdirSync(dirLocation,{recursive: true});
+    const content = fs.readFileSync(path.join(os.homedir(),'workspace.json'));
+    let workSpaceArray = JSON.parse(content).workspaces;
+    const index = workSpaceArray.map(function(item){
+        return item.name;
+    }).indexOf(name);
+    workSpaceArray.splice(index,1);
+    const updatedContent = {
+        workspaces: workSpaceArray
+    }
+    fs.writeFileSync(path.join(os.homedir(),'workspace.json'),JSON.stringify(updatedContent));
+    res.send(updatedContent);
 });
