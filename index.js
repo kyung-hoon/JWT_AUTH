@@ -7,7 +7,7 @@ import cors from 'cors';
 const app = express();
 const port = 8080;
 app.use(cors());
-app.use(express.static(path.join(os.homedir(), 'indexPage', 'target')));
+app.use(express.static(path.join(os.homedir(),'TopWebStudio', 'indexPage', 'target')));
 app.listen(port);
 console.log('express listening on port : 8080');
 
@@ -86,4 +86,12 @@ app.get('/getWorkspaces', (req, res) => {
         const content = fs.readFileSync(path.join(os.homedir(), 'TopWebStudio', 'workspace.json'), JSON.stringify(content));
         res.send(content);
     }
+})
+
+app.post('/open',(req, res)=>{
+    const path =req.body.workspaceName;
+    const url ={
+        url : `192.168.13.120:4000/#/${path}`
+    } 
+    res.send(url);
 })
