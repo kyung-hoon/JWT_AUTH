@@ -98,7 +98,7 @@ app.get('/getWorkspaces', (req, res) => {
 app.post('/open',(req, res)=>{
     const path =req.body.workspaceName;
     const url ={
-        url : `192.168.13.120:4000/#/${path}`
+        url : `192.168.13.120:4000/#${path}`
     } 
     console.log(chalk.yellow("message : "),url);
     res.send(url);
