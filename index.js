@@ -3,6 +3,7 @@ import express from 'express';
 import os from 'os';
 import path from 'path';
 import cors from 'cors';
+import chalk from 'chalk';
 
 const app = express();
 const port = 8080;
@@ -32,6 +33,7 @@ app.post('/create', (req, res) => {
                 "workspaces": workSpaceArray
             }
             fs.writeFileSync(path.join(os.homedir(), 'TopWebStudio', 'workspace.json'), JSON.stringify(content));
+            console.log(chalk.yellow("message : "),content);
             res.send(content);
         } else {
             const content = fs.readFileSync(path.join(os.homedir(), 'TopWebStudio', 'workspace.json'));
@@ -45,7 +47,7 @@ app.post('/create', (req, res) => {
             const updatedContent = {
                 "workspaces": workSpaceArray
             }
-            console.log(updatedContent);
+            console.log(chalk.yellow("message : "),updatedContent);
             fs.writeFileSync(path.join(os.homedir(), 'TopWebStudio', 'workspace.json'), JSON.stringify(updatedContent));
             res.send(updatedContent);
         }
@@ -70,28 +72,34 @@ app.post('/remove', (req, res) => {
         workspaces: workSpaceArray
     }
     fs.writeFileSync(path.join(os.homedir(), 'TopWebStudio', 'workspace.json'), JSON.stringify(updatedContent));
+    console.log(chalk.yellow("message : "),updatedContent);
     res.send(updatedContent);
 });
 
 
 app.get('/getWorkspaces', (req, res) => {
-    if (!path.join(os.homedir(), 'TopWebStudio', 'workspace.json')){
+    if (!fs.existsSync(path.join(os.homedir(), 'TopWebStudio', 'workspace.json'))){
         const workSpaceArray = new Array();
         const content = {
             workspaces : workSpaceArray
         }
         fs.writeFileSync(path.join(os.homedir(), 'TopWebStudio', 'workspace.json'), JSON.stringify(content));
+        console.log(chalk.yellow("message : "),content);
         res.send(content);
     }else{
         const content = fs.readFileSync(path.join(os.homedir(), 'TopWebStudio', 'workspace.json'), JSON.stringify(content));
+        console.log(chalk.yellow("message : "),content);
         res.send(content);
     }
 })
 
+
+//추후 같은 pod 내에 배포 될시 localhost로 변경
 app.post('/open',(req, res)=>{
     const path =req.body.workspaceName;
     const url ={
         url : `192.168.13.120:4000/#/${path}`
     } 
+    console.log(chalk.yellow("message : "),url);
     res.send(url);
 })
