@@ -5,10 +5,11 @@ import path from 'path';
 import cors from 'cors';
 import chalk from 'chalk';
 
+
 const app = express();
 const port = 8080;
 app.use(cors());
-app.use(express.static(path.join(os.homedir(),'TopWebStudio', 'indexPage', 'target')));
+app.use(express.static(path.join(os.homedir(),  'indexPage')));
 app.listen(port);
 console.log('express listening on port : 8080');
 
@@ -61,7 +62,7 @@ app.post('/create', (req, res) => {
 app.post('/remove', (req, res) => {
     const name = req.body.workspaceName;
     const dirLocation = path.join(os.homedir(), 'TopWebStudio', name);
-    fs.rmdirSync(dirLocation, { recursive: true });
+    fs.removeSync(dirLocation, { recursive: true });
     const content = fs.readFileSync(path.join(os.homedir(), 'TopWebStudio', 'workspace.json'));
     let workSpaceArray = JSON.parse(content).workspaces;
     const index = workSpaceArray.map(function (item) {
