@@ -18,44 +18,7 @@ app.use(express.json());
 
 app.post('/create', (req, res) => {
     const name = req.body.workspaceName;
-    const dirLocation = path.join(os.homedir(), 'TopWebStudio', name);
-    if (!fs.existsSync(dirLocation)) {
-        fs.mkdirSync(dirLocation, { recursive: true });
-        const lastModified = fs.statSync(dirLocation).mtime.toLocaleString("ko-KR", { timeZone: "Asia/Seoul" }).replace(/T/, ' ').replace(/\..+/, '');
-        if (!fs.existsSync(path.join(os.homedir(), 'TopWebStudio', 'workspace.json'))) {
-            let workSpaceArray = new Array();
-            const workSpaceObejct = {
-                name: name,
-                location: dirLocation,
-                lastModified: lastModified
-            }
-            workSpaceArray.push(workSpaceObejct);
-            const content = {
-                "workspaces": workSpaceArray
-            }
-            fs.writeFileSync(path.join(os.homedir(), 'TopWebStudio', 'workspace.json'), JSON.stringify(content));
-            console.log(chalk.yellow("message : "),content);
-            res.send(content);
-        } else {
-            const content = fs.readFileSync(path.join(os.homedir(), 'TopWebStudio', 'workspace.json'));
-            let workSpaceArray = JSON.parse(content).workspaces;
-            const workSpaceObejct = {
-                name: name,
-                location: dirLocation,
-                lastModified: lastModified
-            }
-            workSpaceArray.push(workSpaceObejct);
-            const updatedContent = {
-                "workspaces": workSpaceArray
-            }
-            console.log(chalk.yellow("message : "),updatedContent);
-            fs.writeFileSync(path.join(os.homedir(), 'TopWebStudio', 'workspace.json'), JSON.stringify(updatedContent));
-            res.send(updatedContent);
-        }
-
-    } else {
-        res.status(500).send('workspace already exists');
-    }
+    console.log(req)
 
 });
 
